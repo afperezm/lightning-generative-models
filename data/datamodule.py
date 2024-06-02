@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader, random_split
 from torchvision import datasets, transforms
 from tqdm import tqdm
 
+from data.dataLoader import SEN12MSCR
 from utils.path import DATASET_PATH
 
 
@@ -14,22 +15,17 @@ class CenterCropMinXY(object):
     """
     Custom transform that performs a center crop on the image in the smaller dimension (X or Y).
     """
-
     def __call__(self, image):
         assert type(image) == torch.Tensor
         # Get the height and width of the image
         _, h, w = image.shape
-
         # Determine the smaller dimension
         min_dim = min(h, w)
-
         # Calculate top and left coordinates for cropping
         top = (h - min_dim) // 2
         left = (w - min_dim) // 2
-
         # Perform the crop
         image = image[:, top: top + min_dim, left: left + min_dim]
-
         # Update the sample dictionary
         return image
 
@@ -200,6 +196,23 @@ class DataModule(pl.LightningDataModule):
                 transform=self.transforms["test"],
             )
 
+        elif self.name == "SEN12MSCR":
+
+            self.train_dataset = SEN12MSCR(
+                root=self.data_dir,
+                split="train"
+            )
+
+            self.val_dataset = SEN12MSCR(
+                root=self.data_dir,
+                split="val"
+            )
+
+            self.test_dataset = SEN12MSCR(
+                root=self.data_dir,
+                split="test"
+            )
+
     def train_dataloader(self) -> DataLoader:
         return DataLoader(
             self.train_dataset,
@@ -231,7 +244,8 @@ class DataModule(pl.LightningDataModule):
     def sanity_check(self):
         if self.name == "MNIST":
             assert self.img_channels == 1, "MNIST dataset supports `img_channels=1`."
-
+        elif self.name == "SEN12MSCR":
+            assert self.img_channels == 2, "SEN12MSCR dataset supports `img_channels=2`."
         else:
             assert (
                 self.img_channels == 3
