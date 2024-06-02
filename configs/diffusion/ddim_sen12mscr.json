@@ -17,7 +17,7 @@
         "name": "SEN12MSCR",
         "img_size": 256,
         "img_channels": 2,
-        "data_dir": "/Users/perezmaf/data/sen12mscr-dataset/",
+        "data_dir": "/Users/perezmaf/data/sen12mscr-dataset/unpacked/",
         "batch_size": 32,
         "train_val_split": 0.8
     }
