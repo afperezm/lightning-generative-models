@@ -9,7 +9,7 @@ import yaml
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import WandbLogger
 
-from data.datamodule import DataModule
+from codebase.data.datamodule import DataModule
 from utils.callbacks import LogArtifactCallback
 from utils.lightning_utils import configure_num_workers, configure_strategy
 from utils.load_model import load_config, load_model
