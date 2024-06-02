@@ -44,7 +44,7 @@ def configure_strategy() -> Strategy:
 
         # Use SingleDeviceStrategy for a single GPU
         print("Using SingleDeviceStrategy for training on a single GPU.")
-        return SingleDeviceStrategy("cuda")
+        return SingleDeviceStrategy("cuda:0")
 
     # Check for Apple Silicon GPU availability
     elif torch.backends.mps.is_available():
