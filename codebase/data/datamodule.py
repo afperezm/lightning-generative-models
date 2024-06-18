@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader, random_split
 from torchvision import datasets, transforms
 from tqdm import tqdm
 
+from codebase.datasets.massroads import MassDataset
 from data.dataLoader import SEN12MSCR
 from utils.path import DATASET_PATH
 
@@ -213,6 +214,29 @@ class DataModule(pl.LightningDataModule):
             self.test_dataset = SEN12MSCR(
                 root=self.data_dir,
                 split="test",
+                transform=self.transforms["test"]
+            )
+
+        elif self.name == "MassRoads":
+
+            self.train_dataset = MassDataset(
+                data_dir=self.data_dir,
+                dataset='roads',
+                split='train',
+                transform=self.transforms["train"]
+            )
+
+            self.val_dataset = MassDataset(
+                data_dir=self.data_dir,
+                dataset='roads',
+                split='valid',
+                transform=self.transforms["val"]
+            )
+
+            self.test_dataset = MassDataset(
+                data_dir=self.data_dir,
+                dataset='roads',
+                split='test',
                 transform=self.transforms["test"]
             )
 
