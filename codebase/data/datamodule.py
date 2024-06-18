@@ -271,8 +271,6 @@ class DataModule(pl.LightningDataModule):
     def sanity_check(self):
         if self.name == "MNIST":
             assert self.img_channels == 1, "MNIST dataset supports `img_channels=1`."
-        elif self.name == "SEN12MSCR":
-            assert self.img_channels == 3, "SEN12MSCR dataset supports `img_channels=3`."
         else:
             assert (
                 self.img_channels == 3
