@@ -255,14 +255,14 @@ class DataModule(pl.LightningDataModule):
                 full_train_dataset, [train_size, valid_size]
             )
 
-            self.test_dataset = ISPRSDataset(
-                self.data_dir,
-                is_train=False
-            )
-
             self.train_dataset.dataset.transform = self.transforms["train"]
             self.val_dataset.dataset.transform = self.transforms["val"]
-            self.test_dataset.dataset.transform = self.transforms["test"]
+
+            self.test_dataset = ISPRSDataset(
+                self.data_dir,
+                is_train=False,
+                transform=self.transforms["test"]
+            )
 
     def train_dataloader(self) -> DataLoader:
         return DataLoader(
