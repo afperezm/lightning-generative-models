@@ -260,9 +260,9 @@ class DataModule(pl.LightningDataModule):
                 is_train=False
             )
 
-            self.train_dataset.transform = self.transforms["train"]
-            self.val_dataset.transform = self.transforms["val"]
-            self.test_dataset.transform = self.transforms["test"]
+            self.train_dataset.dataset.transform = self.transforms["train"]
+            self.val_dataset.dataset.transform = self.transforms["val"]
+            self.test_dataset.dataset.transform = self.transforms["test"]
 
     def train_dataloader(self) -> DataLoader:
         return DataLoader(
