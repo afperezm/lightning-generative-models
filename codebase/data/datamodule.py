@@ -200,17 +200,20 @@ class DataModule(pl.LightningDataModule):
 
             self.train_dataset = SEN12MSCR(
                 root=self.data_dir,
-                split="train"
+                split="train",
+                transform=self.transforms["train"]
             )
 
             self.val_dataset = SEN12MSCR(
                 root=self.data_dir,
-                split="val"
+                split="val",
+                transform=self.transforms["val"]
             )
 
             self.test_dataset = SEN12MSCR(
                 root=self.data_dir,
-                split="test"
+                split="test",
+                transform=self.transforms["test"]
             )
 
     def train_dataloader(self) -> DataLoader:
