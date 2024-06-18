@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader, random_split
 from torchvision import datasets, transforms
 from tqdm import tqdm
 
-from codebase.datasets.massroads import MassDataset
+from massroads import MassDataset
 from data.dataLoader import SEN12MSCR
 from utils.path import DATASET_PATH
 
