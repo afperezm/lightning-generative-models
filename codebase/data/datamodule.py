@@ -248,7 +248,7 @@ class DataModule(pl.LightningDataModule):
         if self.name == "MNIST":
             assert self.img_channels == 1, "MNIST dataset supports `img_channels=1`."
         elif self.name == "SEN12MSCR":
-            assert self.img_channels == 2, "SEN12MSCR dataset supports `img_channels=2`."
+            assert self.img_channels == 2, "SEN12MSCR dataset supports `img_channels=3`."
         else:
             assert (
                 self.img_channels == 3
