@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader, random_split
 from torchvision import datasets, transforms
 from tqdm import tqdm
 
+from isprs import ISPRSDataset
 from massroads import MassDataset
 from data.dataLoader import SEN12MSCR
 from utils.path import DATASET_PATH
@@ -239,6 +240,29 @@ class DataModule(pl.LightningDataModule):
                 split='test',
                 transform=self.transforms["test"]
             )
+
+        elif self.name == "ISPRS":
+
+            full_train_dataset = ISPRSDataset(
+                data_dir=self.data_dir,
+                is_train=True
+            )
+
+            train_size = self.train_val_split
+            valid_size = 1.0 - train_size
+
+            self.train_dataset, self.val_dataset = random_split(
+                full_train_dataset, [train_size, valid_size]
+            )
+
+            self.test_dataset = ISPRSDataset(
+                self.data_dir,
+                is_train=False
+            )
+
+            self.train_dataset.transform = self.transforms["train"]
+            self.val_dataset.transform = self.transforms["val"]
+            self.test_dataset.transform = self.transforms["test"]
 
     def train_dataloader(self) -> DataLoader:
         return DataLoader(
